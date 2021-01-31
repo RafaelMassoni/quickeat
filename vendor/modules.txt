@@ -1,0 +1,15 @@
+# github.com/99designs/gqlgen v0.13.0
+## explicit
+github.com/99designs/gqlgen/graphql
+github.com/99designs/gqlgen/graphql/introspection
+# github.com/agnivade/levenshtein v1.0.3
+github.com/agnivade/levenshtein
+# github.com/vektah/gqlparser/v2 v2.1.0
+## explicit
+github.com/vektah/gqlparser/v2
+github.com/vektah/gqlparser/v2/ast
+github.com/vektah/gqlparser/v2/gqlerror
+github.com/vektah/gqlparser/v2/lexer
+github.com/vektah/gqlparser/v2/parser
+github.com/vektah/gqlparser/v2/validator
+github.com/vektah/gqlparser/v2/validator/rules
