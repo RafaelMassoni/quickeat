@@ -13,13 +13,14 @@ USE `quickeat`;
 -- Dumping structure for table quickeat.categorias
 CREATE TABLE IF NOT EXISTS `categorias` (
     `id` INT(11) unsigned NOT NULL AUTO_INCREMENT,
+    `nome` varchar(32) NOT NULL,
     PRIMARY KEY (`id`)
-    ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
-INSERT INTO `categorias` (`id`) VALUES
-    (1),
-    (2),
-    (3);
+INSERT INTO `categorias` (`id`, `nome`) VALUES
+    (1, "Brasileira"),
+    (2, "Massas"),
+    (3, "Japonesa");
 
 -- Dumping data for table quickeat.categorias: ~0 rows (approximately)
 /*!40000 ALTER TABLE `categorias` DISABLE KEYS */;
@@ -40,11 +41,11 @@ CREATE TABLE IF NOT EXISTS `pratos` (
 -- Dumping data for table quickeat.pratos: ~0 rows (approximately)
 /*!40000 ALTER TABLE `pratos` DISABLE KEYS */;
 INSERT INTO `pratos` (`id`, `id_categoria`, `nome`, `preco`, `tempo_de_preparo`) VALUES
-   (1, NULL, 'tilápia', 45.00, 30),
-   (2, NULL, 'batata frita', 15.00, 15),
-   (3, NULL, 'batata frita com queijo', 18.00, 16),
-   (4, NULL, 'iscas de frango acebolada', 20.00, 20),
-   (5, NULL, 'filé parmegiana', 40.00, 40);
+   (1, 1, 'tilápia', 45.00, 30),
+   (2, 1, 'batata frita', 15.00, 15),
+   (3, 1, 'batata frita com queijo', 18.00, 16),
+   (4, 1, 'iscas de frango acebolada', 20.00, 20),
+   (5, 1, 'filé parmegiana', 40.00, 40);
 /*!40000 ALTER TABLE `pratos` ENABLE KEYS */;
 
 /*!40101 SET SQL_MODE=IFNULL(@OLD_SQL_MODE, '') */;
