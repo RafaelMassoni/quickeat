@@ -12,11 +12,8 @@ github.com/99designs/gqlgen/graphql/introspection
 github.com/99designs/gqlgen/graphql/playground
 # github.com/agnivade/levenshtein v1.0.3
 github.com/agnivade/levenshtein
-<<<<<<< HEAD
 # github.com/davecgh/go-spew v1.1.1
 github.com/davecgh/go-spew/spew
-=======
->>>>>>> 7206e49 (Add Dish query/mutation/model)
 # github.com/go-chi/chi v3.3.2+incompatible
 ## explicit
 github.com/go-chi/chi
@@ -30,15 +27,12 @@ github.com/hashicorp/golang-lru
 github.com/hashicorp/golang-lru/simplelru
 # github.com/mitchellh/mapstructure v0.0.0-20180203102830-a4e142e9c047
 github.com/mitchellh/mapstructure
-<<<<<<< HEAD
 # github.com/pmezard/go-difflib v1.0.0
 github.com/pmezard/go-difflib/difflib
 # github.com/stretchr/testify v1.4.0
 ## explicit
 github.com/stretchr/testify/assert
 github.com/stretchr/testify/require
-=======
->>>>>>> 7206e49 (Add Dish query/mutation/model)
 # github.com/vektah/gqlparser/v2 v2.1.0
 ## explicit
 github.com/vektah/gqlparser/v2
@@ -50,8 +44,5 @@ github.com/vektah/gqlparser/v2/validator
 github.com/vektah/gqlparser/v2/validator/rules
 # google.golang.org/appengine v1.6.7
 ## explicit
-<<<<<<< HEAD
 # gopkg.in/yaml.v2 v2.2.4
 gopkg.in/yaml.v2
-=======
->>>>>>> 7206e49 (Add Dish query/mutation/model)
