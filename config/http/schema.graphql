@@ -1,0 +1,29 @@
+scalar Time
+
+type Dish {
+	id: Int!
+	category: Category
+	name: String!
+	price: Float!
+	cookTime: Int!
+}
+
+type Category {
+	id: Int!
+	name: String!
+}
+
+input createDishInput {
+	name: String!
+	category: Int
+	price: Float!
+	cookTime: Int!
+}
+
+type Query {
+	dish(name: String!, category: [String!]): [Dish!]
+}
+
+type Mutation {
+	createDish(input: createDishInput!): Boolean!
+}

@@ -11,3 +11,7 @@ func NewResolverRoot() gqlgen.ResolverRoot {
 func (a app) Query() gqlgen.QueryResolver {
 	return NewQueryResolver()
 }
+
+func (a app) Mutation() gqlgen.MutationResolver {
+	return NewMutationResolver()
+}
