@@ -6,10 +6,6 @@ import (
 	"quickeat/services"
 )
 
-	"quickeat/pkg/graphql/gqlgen"
-	"quickeat/services"
-)
-
 type app struct {
 	services services.All
 }

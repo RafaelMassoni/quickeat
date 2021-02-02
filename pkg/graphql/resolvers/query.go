@@ -18,10 +18,21 @@ func NewQueryResolver(services services.All) gqlgen.QueryResolver {
 
 func (q queryResolver) Category(ctx context.Context, id int) (*models.Category, error) {
 	category := models.NewCategory()
-	return category, nil
+	return category[0], nil
 }
 
-func (q queryResolver) Dish(ctx context.Context, name string, category []string) ([]*models.Dish, error) {
-	dish := models.NewDish()
-	return dish, nil
+func (q queryResolver) Dish(ctx context.Context, id *int) ([]*models.Dish, error) {
+	if id != nil {
+		d, err := q.services.Dish.Get(ctx, *id)
+		if err != nil {
+			return nil, err
+		}
+		return models.NewDish(d), nil
+	}
+
+	d, err := q.services.Dish.GetAll(ctx)
+	if err != nil {
+		return nil, err
+	}
+	return models.NewDish(d...), nil
 }

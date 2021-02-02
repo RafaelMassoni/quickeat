@@ -3,7 +3,6 @@ package graphql
 import (
 	"context"
 
-	"quickeat/pkg/entity"
 	"quickeat/pkg/graphql/gqlgen"
 	"quickeat/pkg/graphql/models"
 )
