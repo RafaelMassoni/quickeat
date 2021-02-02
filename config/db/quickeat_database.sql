@@ -35,8 +35,8 @@ CREATE TABLE IF NOT EXISTS `pratos` (
     `tempo_de_preparo` tinyint(3) unsigned NOT NULL DEFAULT 0 COMMENT 'MINUTOS',
     PRIMARY KEY (`id`),
     KEY `id_categoria` (`id_categoria`),
-    CONSTRAINT `pratos_categoria_fk` FOREIGN KEY (`id_categoria`) REFERENCES `categorias` (`id`) ON DELETE SET NULL ON UPDATE CASCADE,
-    ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+    CONSTRAINT `pratos_categoria_fk` FOREIGN KEY (`id_categoria`) REFERENCES `categorias` (`id`) ON DELETE SET NULL ON UPDATE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- Dumping data for table quickeat.pratos: ~0 rows (approximately)
 /*!40000 ALTER TABLE `pratos` DISABLE KEYS */;

@@ -1,14 +1,18 @@
 package models
 
-func NewDish() []*Dish {
+import "quickeat/pkg/entity"
+
+func NewDish(dishes ...*entity.Dish) []*Dish {
 	result := make([]*Dish, 0)
-	result = append(result, &Dish{
-		ID:       0,
-		Category: nil,
-		Name:     "Peito de Frango",
-		Price:    15.50,
-		CookTime: 15,
-	})
+
+	for _, dish := range dishes {
+		result = append(result, &Dish{
+			ID:       dish.Id,
+			Name:     dish.Name,
+			Price:    dish.Price,
+			CookTime: dish.CookTime,
+		})
+	}
 
 	return result
 }

@@ -21,9 +21,11 @@ input createDishInput {
 }
 
 type Query {
-	dish(name: String!, category: [String!]): [Dish!]
+	dish(id: Int): [Dish!]
+	category(id: Int!): Category!
 }
 
 type Mutation {
 	createDish(input: createDishInput!): Boolean!
+	createCategory(name: String!): Boolean!
 }

@@ -1,7 +1,7 @@
 schema: schema.graphql
 
 exec:
-        filename: ./../../pkg/graphql/gqlgen/generated.go
+  filename: ./../../pkg/graphql/gqlgen/generated.go
 
 model:
-        filename: ./../../pkg/graphql/models/models.go
+  filename: ./../../pkg/graphql/models/generated.go
