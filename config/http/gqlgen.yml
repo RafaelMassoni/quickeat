@@ -4,4 +4,4 @@ exec:
         filename: ./../../pkg/graphql/gqlgen/generated.go
 
 model:
-        filename: ./../../pkg/graphql/models/generated.go
+        filename: ./../../pkg/graphql/models/models.go
