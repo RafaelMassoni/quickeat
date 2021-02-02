@@ -6,25 +6,18 @@ import (
 	"github.com/99designs/gqlgen/graphql/handler"
 	"github.com/99designs/gqlgen/graphql/playground"
 	"github.com/go-chi/chi"
-	"github.com/go-chi/cors"
+	"github.com/jmoiron/sqlx"
 
 	"quickeat/pkg/graphql/gqlgen"
 	graphql "quickeat/pkg/graphql/resolvers"
 )
 
-func NewHandler() http.Handler {
+func NewHandler(db *sqlx.DB) http.Handler {
 	r := chi.NewRouter()
 	gqlgenConfig := gqlgen.Config{
-		Resolvers: graphql.NewResolverRoot(),
+		Resolvers: graphql.NewResolverRoot(db),
 	}
-	r.Use(cors.Handler(cors.Options{
-		AllowedOrigins:   []string{"*"},
-		AllowedMethods:   []string{"GET", "POST", "PUT", "DELETE", "OPTIONS"},
-		AllowedHeaders:   []string{"Accept", "Authorization", "Content-Type", "X-CSRF-Token"},
-		ExposedHeaders:   []string{"Link"},
-		AllowCredentials: false,
-		MaxAge:           300, // Maximum value not ignored by any of major browsers
-	}))
+
 	svc := handler.NewDefaultServer(gqlgen.NewExecutableSchema(gqlgenConfig))
 
 	r.Handle("/", svc)

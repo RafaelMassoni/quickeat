@@ -3,6 +3,7 @@ package graphql
 import (
 	"context"
 
+	"quickeat/pkg/entity"
 	"quickeat/pkg/graphql/gqlgen"
 	"quickeat/pkg/graphql/models"
 )
@@ -14,5 +15,9 @@ func NewMutationResolver() gqlgen.MutationResolver {
 }
 
 func (m mutationResolver) CreateDish(ctx context.Context, input models.CreateDishInput) (bool, error) {
+	return true, nil
+}
+
+func (m mutationResolver) CreateCategory(ctx context.Context, name string) (bool, error) {
 	return true, nil
 }

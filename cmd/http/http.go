@@ -6,17 +6,26 @@ import (
 	"log"
 	"net/http"
 
-	"quickeat/config/http"
+	dbConf "quickeat/config/db"
+	httpConf "quickeat/config/http"
 	"quickeat/pkg/graphql"
+
+	_ "github.com/go-sql-driver/mysql"
+	"github.com/jmoiron/sqlx"
 )
 
 func main() {
-	server := http.Server{
-		Addr:    config.GraphqlAddr,
-		Handler: graphql.NewHandler(),
+	db, err := sqlx.Connect("mysql", dbConf.DatabaseConn)
+	if err != nil {
+		log.Fatal(err)
 	}
 
-	fmt.Printf("Listening on %s", config.GraphqlAddr)
+	server := http.Server{
+		Addr:    httpConf.GraphqlAddr,
+		Handler: graphql.NewHandler(db),
+	}
+
+	fmt.Printf("Listening on %s", httpConf.GraphqlAddr)
 	if err := server.ListenAndServe(); err != http.ErrServerClosed {
 		log.Fatalf("ListenAndServe: %v", err)
 	}

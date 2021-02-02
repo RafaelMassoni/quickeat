@@ -1,15 +1,25 @@
 package graphql
 
-import "quickeat/pkg/graphql/gqlgen"
+import (
+	"github.com/jmoiron/sqlx"
+	"quickeat/pkg/graphql/gqlgen"
+	"quickeat/services"
+)
 
-type app struct{}
+	"quickeat/pkg/graphql/gqlgen"
+	"quickeat/services"
+)
 
-func NewResolverRoot() gqlgen.ResolverRoot {
-	return new(app)
+type app struct {
+	services services.All
+}
+
+func NewResolverRoot(db *sqlx.DB) gqlgen.ResolverRoot {
+	return app{services: services.NewServices(db)}
 }
 
 func (a app) Query() gqlgen.QueryResolver {
-	return NewQueryResolver()
+	return NewQueryResolver(a.services)
 }
 
 func (a app) Mutation() gqlgen.MutationResolver {
