@@ -1,3 +1,4 @@
+//go:generate go run -mod=mod github.com/golang/mock/mockgen -package=mock -source=$GOFILE -destination=../test/dishservice.go
 package services
 
 import (
