@@ -5,10 +5,18 @@ package gqlgen
 import (
 	"bytes"
 	"context"
+<<<<<<< HEAD
 	"errors"
 	"quickeat/pkg/graphql/models"
 	"strconv"
 	"sync"
+=======
+	"quickeat/pkg/graphql/models"
+	"errors"
+	"strconv"
+	"sync"
+	"sync/atomic"
+>>>>>>> 7206e49 (Add Dish query/mutation/model)
 
 	"github.com/99designs/gqlgen/graphql"
 	"github.com/99designs/gqlgen/graphql/introspection"
@@ -34,7 +42,10 @@ type Config struct {
 }
 
 type ResolverRoot interface {
+<<<<<<< HEAD
 	Mutation() MutationResolver
+=======
+>>>>>>> 7206e49 (Add Dish query/mutation/model)
 	Query() QueryResolver
 }
 
@@ -42,6 +53,7 @@ type DirectiveRoot struct {
 }
 
 type ComplexityRoot struct {
+<<<<<<< HEAD
 	Category struct {
 		ID   func(childComplexity int) int
 		Name func(childComplexity int) int
@@ -69,6 +81,23 @@ type MutationResolver interface {
 }
 type QueryResolver interface {
 	Dish(ctx context.Context, name string, category []string) ([]*models.Dish, error)
+=======
+	Query struct {
+		User func(childComplexity int, id int) int
+	}
+
+	User struct {
+		Email       func(childComplexity int) int
+		FirstName   func(childComplexity int) int
+		ID          func(childComplexity int) int
+		LastName    func(childComplexity int) int
+		PhoneNumber func(childComplexity int) int
+	}
+}
+
+type QueryResolver interface {
+	User(ctx context.Context, id int) (*models.User, error)
+>>>>>>> 7206e49 (Add Dish query/mutation/model)
 }
 
 type executableSchema struct {
@@ -86,6 +115,7 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 	_ = ec
 	switch typeName + "." + field {
 
+<<<<<<< HEAD
 	case "Category.id":
 		if e.complexity.Category.ID == nil {
 			break
@@ -141,10 +171,19 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 		}
 
 		args, err := ec.field_Mutation_createDish_args(context.TODO(), rawArgs)
+=======
+	case "Query.user":
+		if e.complexity.Query.User == nil {
+			break
+		}
+
+		args, err := ec.field_Query_user_args(context.TODO(), rawArgs)
+>>>>>>> 7206e49 (Add Dish query/mutation/model)
 		if err != nil {
 			return 0, false
 		}
 
+<<<<<<< HEAD
 		return e.complexity.Mutation.CreateDish(childComplexity, args["input"].(models.CreateDishInput)), true
 
 	case "Query.dish":
@@ -158,6 +197,44 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 		}
 
 		return e.complexity.Query.Dish(childComplexity, args["name"].(string), args["category"].([]string)), true
+=======
+		return e.complexity.Query.User(childComplexity, args["id"].(int)), true
+
+	case "User.email":
+		if e.complexity.User.Email == nil {
+			break
+		}
+
+		return e.complexity.User.Email(childComplexity), true
+
+	case "User.firstName":
+		if e.complexity.User.FirstName == nil {
+			break
+		}
+
+		return e.complexity.User.FirstName(childComplexity), true
+
+	case "User.id":
+		if e.complexity.User.ID == nil {
+			break
+		}
+
+		return e.complexity.User.ID(childComplexity), true
+
+	case "User.lastName":
+		if e.complexity.User.LastName == nil {
+			break
+		}
+
+		return e.complexity.User.LastName(childComplexity), true
+
+	case "User.phoneNumber":
+		if e.complexity.User.PhoneNumber == nil {
+			break
+		}
+
+		return e.complexity.User.PhoneNumber(childComplexity), true
+>>>>>>> 7206e49 (Add Dish query/mutation/model)
 
 	}
 	return 0, false
@@ -183,6 +260,7 @@ func (e *executableSchema) Exec(ctx context.Context) graphql.ResponseHandler {
 				Data: buf.Bytes(),
 			}
 		}
+<<<<<<< HEAD
 	case ast.Mutation:
 		return func(ctx context.Context) *graphql.Response {
 			if !first {
@@ -197,6 +275,8 @@ func (e *executableSchema) Exec(ctx context.Context) graphql.ResponseHandler {
 				Data: buf.Bytes(),
 			}
 		}
+=======
+>>>>>>> 7206e49 (Add Dish query/mutation/model)
 
 	default:
 		return graphql.OneShot(graphql.ErrorResponse(ctx, "unsupported GraphQL operation"))
@@ -223,6 +303,7 @@ func (ec *executionContext) introspectType(name string) (*introspection.Type, er
 }
 
 var sources = []*ast.Source{
+<<<<<<< HEAD
 	{Name: "schema.graphql", Input: `scalar Time
 
 type Dish {
@@ -251,6 +332,18 @@ type Query {
 
 type Mutation {
 	createDish(input: createDishInput!): Boolean!
+=======
+	{Name: "schema.graphql", Input: `type User {
+	id: Int!
+	firstName: String!
+	lastName: String!
+	phoneNumber: Int!
+	email: String!
+}
+
+type Query {
+	user(id: Int!): User!
+>>>>>>> 7206e49 (Add Dish query/mutation/model)
 }
 `, BuiltIn: false},
 }
@@ -260,6 +353,7 @@ var parsedSchema = gqlparser.MustLoadSchema(sources...)
 
 // region    ***************************** args.gotpl *****************************
 
+<<<<<<< HEAD
 func (ec *executionContext) field_Mutation_createDish_args(ctx context.Context, rawArgs map[string]interface{}) (map[string]interface{}, error) {
 	var err error
 	args := map[string]interface{}{}
@@ -275,6 +369,8 @@ func (ec *executionContext) field_Mutation_createDish_args(ctx context.Context, 
 	return args, nil
 }
 
+=======
+>>>>>>> 7206e49 (Add Dish query/mutation/model)
 func (ec *executionContext) field_Query___type_args(ctx context.Context, rawArgs map[string]interface{}) (map[string]interface{}, error) {
 	var err error
 	args := map[string]interface{}{}
@@ -290,6 +386,7 @@ func (ec *executionContext) field_Query___type_args(ctx context.Context, rawArgs
 	return args, nil
 }
 
+<<<<<<< HEAD
 func (ec *executionContext) field_Query_dish_args(ctx context.Context, rawArgs map[string]interface{}) (map[string]interface{}, error) {
 	var err error
 	args := map[string]interface{}{}
@@ -297,10 +394,20 @@ func (ec *executionContext) field_Query_dish_args(ctx context.Context, rawArgs m
 	if tmp, ok := rawArgs["name"]; ok {
 		ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("name"))
 		arg0, err = ec.unmarshalNString2string(ctx, tmp)
+=======
+func (ec *executionContext) field_Query_user_args(ctx context.Context, rawArgs map[string]interface{}) (map[string]interface{}, error) {
+	var err error
+	args := map[string]interface{}{}
+	var arg0 int
+	if tmp, ok := rawArgs["id"]; ok {
+		ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("id"))
+		arg0, err = ec.unmarshalNInt2int(ctx, tmp)
+>>>>>>> 7206e49 (Add Dish query/mutation/model)
 		if err != nil {
 			return nil, err
 		}
 	}
+<<<<<<< HEAD
 	args["name"] = arg0
 	var arg1 []string
 	if tmp, ok := rawArgs["category"]; ok {
@@ -311,6 +418,9 @@ func (ec *executionContext) field_Query_dish_args(ctx context.Context, rawArgs m
 		}
 	}
 	args["category"] = arg1
+=======
+	args["id"] = arg0
+>>>>>>> 7206e49 (Add Dish query/mutation/model)
 	return args, nil
 }
 
@@ -352,6 +462,7 @@ func (ec *executionContext) field___Type_fields_args(ctx context.Context, rawArg
 
 // region    **************************** field.gotpl *****************************
 
+<<<<<<< HEAD
 func (ec *executionContext) _Category_id(ctx context.Context, field graphql.CollectedField, obj *models.Category) (ret graphql.Marshaler) {
 	defer func() {
 		if r := recover(); r != nil {
@@ -637,6 +748,9 @@ func (ec *executionContext) _Mutation_createDish(ctx context.Context, field grap
 }
 
 func (ec *executionContext) _Query_dish(ctx context.Context, field graphql.CollectedField) (ret graphql.Marshaler) {
+=======
+func (ec *executionContext) _Query_user(ctx context.Context, field graphql.CollectedField) (ret graphql.Marshaler) {
+>>>>>>> 7206e49 (Add Dish query/mutation/model)
 	defer func() {
 		if r := recover(); r != nil {
 			ec.Error(ctx, ec.Recover(ctx, r))
@@ -653,7 +767,11 @@ func (ec *executionContext) _Query_dish(ctx context.Context, field graphql.Colle
 
 	ctx = graphql.WithFieldContext(ctx, fc)
 	rawArgs := field.ArgumentMap(ec.Variables)
+<<<<<<< HEAD
 	args, err := ec.field_Query_dish_args(ctx, rawArgs)
+=======
+	args, err := ec.field_Query_user_args(ctx, rawArgs)
+>>>>>>> 7206e49 (Add Dish query/mutation/model)
 	if err != nil {
 		ec.Error(ctx, err)
 		return graphql.Null
@@ -661,18 +779,33 @@ func (ec *executionContext) _Query_dish(ctx context.Context, field graphql.Colle
 	fc.Args = args
 	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
 		ctx = rctx // use context from middleware stack in children
+<<<<<<< HEAD
 		return ec.resolvers.Query().Dish(rctx, args["name"].(string), args["category"].([]string))
+=======
+		return ec.resolvers.Query().User(rctx, args["id"].(int))
+>>>>>>> 7206e49 (Add Dish query/mutation/model)
 	})
 	if err != nil {
 		ec.Error(ctx, err)
 		return graphql.Null
 	}
 	if resTmp == nil {
+<<<<<<< HEAD
 		return graphql.Null
 	}
 	res := resTmp.([]*models.Dish)
 	fc.Result = res
 	return ec.marshalODish2ᚕᚖquickeatᚋpkgᚋgraphqlᚋmodelsᚐDishᚄ(ctx, field.Selections, res)
+=======
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
+		return graphql.Null
+	}
+	res := resTmp.(*models.User)
+	fc.Result = res
+	return ec.marshalNUser2ᚖeasyfoodᚋpkgᚋgraphqlᚋmodelsᚐUser(ctx, field.Selections, res)
+>>>>>>> 7206e49 (Add Dish query/mutation/model)
 }
 
 func (ec *executionContext) _Query___type(ctx context.Context, field graphql.CollectedField) (ret graphql.Marshaler) {
@@ -746,6 +879,184 @@ func (ec *executionContext) _Query___schema(ctx context.Context, field graphql.C
 	return ec.marshalO__Schema2ᚖgithubᚗcomᚋ99designsᚋgqlgenᚋgraphqlᚋintrospectionᚐSchema(ctx, field.Selections, res)
 }
 
+<<<<<<< HEAD
+=======
+func (ec *executionContext) _User_id(ctx context.Context, field graphql.CollectedField, obj *models.User) (ret graphql.Marshaler) {
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	fc := &graphql.FieldContext{
+		Object:     "User",
+		Field:      field,
+		Args:       nil,
+		IsMethod:   false,
+		IsResolver: false,
+	}
+
+	ctx = graphql.WithFieldContext(ctx, fc)
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.ID, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
+		return graphql.Null
+	}
+	res := resTmp.(int)
+	fc.Result = res
+	return ec.marshalNInt2int(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) _User_firstName(ctx context.Context, field graphql.CollectedField, obj *models.User) (ret graphql.Marshaler) {
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	fc := &graphql.FieldContext{
+		Object:     "User",
+		Field:      field,
+		Args:       nil,
+		IsMethod:   false,
+		IsResolver: false,
+	}
+
+	ctx = graphql.WithFieldContext(ctx, fc)
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.FirstName, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
+		return graphql.Null
+	}
+	res := resTmp.(string)
+	fc.Result = res
+	return ec.marshalNString2string(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) _User_lastName(ctx context.Context, field graphql.CollectedField, obj *models.User) (ret graphql.Marshaler) {
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	fc := &graphql.FieldContext{
+		Object:     "User",
+		Field:      field,
+		Args:       nil,
+		IsMethod:   false,
+		IsResolver: false,
+	}
+
+	ctx = graphql.WithFieldContext(ctx, fc)
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.LastName, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
+		return graphql.Null
+	}
+	res := resTmp.(string)
+	fc.Result = res
+	return ec.marshalNString2string(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) _User_phoneNumber(ctx context.Context, field graphql.CollectedField, obj *models.User) (ret graphql.Marshaler) {
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	fc := &graphql.FieldContext{
+		Object:     "User",
+		Field:      field,
+		Args:       nil,
+		IsMethod:   false,
+		IsResolver: false,
+	}
+
+	ctx = graphql.WithFieldContext(ctx, fc)
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.PhoneNumber, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
+		return graphql.Null
+	}
+	res := resTmp.(int)
+	fc.Result = res
+	return ec.marshalNInt2int(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) _User_email(ctx context.Context, field graphql.CollectedField, obj *models.User) (ret graphql.Marshaler) {
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	fc := &graphql.FieldContext{
+		Object:     "User",
+		Field:      field,
+		Args:       nil,
+		IsMethod:   false,
+		IsResolver: false,
+	}
+
+	ctx = graphql.WithFieldContext(ctx, fc)
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.Email, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
+		return graphql.Null
+	}
+	res := resTmp.(string)
+	fc.Result = res
+	return ec.marshalNString2string(ctx, field.Selections, res)
+}
+
+>>>>>>> 7206e49 (Add Dish query/mutation/model)
 func (ec *executionContext) ___Directive_name(ctx context.Context, field graphql.CollectedField, obj *introspection.Directive) (ret graphql.Marshaler) {
 	defer func() {
 		if r := recover(); r != nil {
@@ -1833,6 +2144,7 @@ func (ec *executionContext) ___Type_ofType(ctx context.Context, field graphql.Co
 
 // region    **************************** input.gotpl *****************************
 
+<<<<<<< HEAD
 func (ec *executionContext) unmarshalInputcreateDishInput(ctx context.Context, obj interface{}) (models.CreateDishInput, error) {
 	var it models.CreateDishInput
 	var asMap = obj.(map[string]interface{})
@@ -1877,6 +2189,8 @@ func (ec *executionContext) unmarshalInputcreateDishInput(ctx context.Context, o
 	return it, nil
 }
 
+=======
+>>>>>>> 7206e49 (Add Dish query/mutation/model)
 // endregion **************************** input.gotpl *****************************
 
 // region    ************************** interface.gotpl ***************************
@@ -1885,6 +2199,7 @@ func (ec *executionContext) unmarshalInputcreateDishInput(ctx context.Context, o
 
 // region    **************************** object.gotpl ****************************
 
+<<<<<<< HEAD
 var categoryImplementors = []string{"Category"}
 
 func (ec *executionContext) _Category(ctx context.Context, sel ast.SelectionSet, obj *models.Category) graphql.Marshaler {
@@ -1992,6 +2307,8 @@ func (ec *executionContext) _Mutation(ctx context.Context, sel ast.SelectionSet)
 	return out
 }
 
+=======
+>>>>>>> 7206e49 (Add Dish query/mutation/model)
 var queryImplementors = []string{"Query"}
 
 func (ec *executionContext) _Query(ctx context.Context, sel ast.SelectionSet) graphql.Marshaler {
@@ -2007,7 +2324,11 @@ func (ec *executionContext) _Query(ctx context.Context, sel ast.SelectionSet) gr
 		switch field.Name {
 		case "__typename":
 			out.Values[i] = graphql.MarshalString("Query")
+<<<<<<< HEAD
 		case "dish":
+=======
+		case "user":
+>>>>>>> 7206e49 (Add Dish query/mutation/model)
 			field := field
 			out.Concurrently(i, func() (res graphql.Marshaler) {
 				defer func() {
@@ -2015,7 +2336,14 @@ func (ec *executionContext) _Query(ctx context.Context, sel ast.SelectionSet) gr
 						ec.Error(ctx, ec.Recover(ctx, r))
 					}
 				}()
+<<<<<<< HEAD
 				res = ec._Query_dish(ctx, field)
+=======
+				res = ec._Query_user(ctx, field)
+				if res == graphql.Null {
+					atomic.AddUint32(&invalids, 1)
+				}
+>>>>>>> 7206e49 (Add Dish query/mutation/model)
 				return res
 			})
 		case "__type":
@@ -2033,6 +2361,56 @@ func (ec *executionContext) _Query(ctx context.Context, sel ast.SelectionSet) gr
 	return out
 }
 
+<<<<<<< HEAD
+=======
+var userImplementors = []string{"User"}
+
+func (ec *executionContext) _User(ctx context.Context, sel ast.SelectionSet, obj *models.User) graphql.Marshaler {
+	fields := graphql.CollectFields(ec.OperationContext, sel, userImplementors)
+
+	out := graphql.NewFieldSet(fields)
+	var invalids uint32
+	for i, field := range fields {
+		switch field.Name {
+		case "__typename":
+			out.Values[i] = graphql.MarshalString("User")
+		case "id":
+			out.Values[i] = ec._User_id(ctx, field, obj)
+			if out.Values[i] == graphql.Null {
+				invalids++
+			}
+		case "firstName":
+			out.Values[i] = ec._User_firstName(ctx, field, obj)
+			if out.Values[i] == graphql.Null {
+				invalids++
+			}
+		case "lastName":
+			out.Values[i] = ec._User_lastName(ctx, field, obj)
+			if out.Values[i] == graphql.Null {
+				invalids++
+			}
+		case "phoneNumber":
+			out.Values[i] = ec._User_phoneNumber(ctx, field, obj)
+			if out.Values[i] == graphql.Null {
+				invalids++
+			}
+		case "email":
+			out.Values[i] = ec._User_email(ctx, field, obj)
+			if out.Values[i] == graphql.Null {
+				invalids++
+			}
+		default:
+			panic("unknown field " + strconv.Quote(field.Name))
+		}
+	}
+	out.Dispatch()
+	if invalids > 0 {
+		return graphql.Null
+	}
+	return out
+}
+
+>>>>>>> 7206e49 (Add Dish query/mutation/model)
 var __DirectiveImplementors = []string{"__Directive"}
 
 func (ec *executionContext) ___Directive(ctx context.Context, sel ast.SelectionSet, obj *introspection.Directive) graphql.Marshaler {
@@ -2293,6 +2671,7 @@ func (ec *executionContext) marshalNBoolean2bool(ctx context.Context, sel ast.Se
 	return res
 }
 
+<<<<<<< HEAD
 func (ec *executionContext) marshalNDish2ᚖquickeatᚋpkgᚋgraphqlᚋmodelsᚐDish(ctx context.Context, sel ast.SelectionSet, v *models.Dish) graphql.Marshaler {
 	if v == nil {
 		if !graphql.HasFieldError(ctx, graphql.GetFieldContext(ctx)) {
@@ -2318,6 +2697,8 @@ func (ec *executionContext) marshalNFloat2float64(ctx context.Context, sel ast.S
 	return res
 }
 
+=======
+>>>>>>> 7206e49 (Add Dish query/mutation/model)
 func (ec *executionContext) unmarshalNInt2int(ctx context.Context, v interface{}) (int, error) {
 	res, err := graphql.UnmarshalInt(v)
 	return res, graphql.ErrorOnPath(ctx, err)
@@ -2348,6 +2729,23 @@ func (ec *executionContext) marshalNString2string(ctx context.Context, sel ast.S
 	return res
 }
 
+<<<<<<< HEAD
+=======
+func (ec *executionContext) marshalNUser2easyfoodᚋpkgᚋgraphqlᚋmodelsᚐUser(ctx context.Context, sel ast.SelectionSet, v models.User) graphql.Marshaler {
+	return ec._User(ctx, sel, &v)
+}
+
+func (ec *executionContext) marshalNUser2ᚖeasyfoodᚋpkgᚋgraphqlᚋmodelsᚐUser(ctx context.Context, sel ast.SelectionSet, v *models.User) graphql.Marshaler {
+	if v == nil {
+		if !graphql.HasFieldError(ctx, graphql.GetFieldContext(ctx)) {
+			ec.Errorf(ctx, "must not be null")
+		}
+		return graphql.Null
+	}
+	return ec._User(ctx, sel, v)
+}
+
+>>>>>>> 7206e49 (Add Dish query/mutation/model)
 func (ec *executionContext) marshalN__Directive2githubᚗcomᚋ99designsᚋgqlgenᚋgraphqlᚋintrospectionᚐDirective(ctx context.Context, sel ast.SelectionSet, v introspection.Directive) graphql.Marshaler {
 	return ec.___Directive(ctx, sel, &v)
 }
@@ -2577,11 +2975,14 @@ func (ec *executionContext) marshalN__TypeKind2string(ctx context.Context, sel a
 	return res
 }
 
+<<<<<<< HEAD
 func (ec *executionContext) unmarshalNcreateDishInput2quickeatᚋpkgᚋgraphqlᚋmodelsᚐCreateDishInput(ctx context.Context, v interface{}) (models.CreateDishInput, error) {
 	res, err := ec.unmarshalInputcreateDishInput(ctx, v)
 	return res, graphql.ErrorOnPath(ctx, err)
 }
 
+=======
+>>>>>>> 7206e49 (Add Dish query/mutation/model)
 func (ec *executionContext) unmarshalOBoolean2bool(ctx context.Context, v interface{}) (bool, error) {
 	res, err := graphql.UnmarshalBoolean(v)
 	return res, graphql.ErrorOnPath(ctx, err)
@@ -2606,6 +3007,7 @@ func (ec *executionContext) marshalOBoolean2ᚖbool(ctx context.Context, sel ast
 	return graphql.MarshalBoolean(*v)
 }
 
+<<<<<<< HEAD
 func (ec *executionContext) marshalOCategory2ᚖquickeatᚋpkgᚋgraphqlᚋmodelsᚐCategory(ctx context.Context, sel ast.SelectionSet, v *models.Category) graphql.Marshaler {
 	if v == nil {
 		return graphql.Null
@@ -2668,6 +3070,8 @@ func (ec *executionContext) marshalOInt2ᚖint(ctx context.Context, sel ast.Sele
 	return graphql.MarshalInt(*v)
 }
 
+=======
+>>>>>>> 7206e49 (Add Dish query/mutation/model)
 func (ec *executionContext) unmarshalOString2string(ctx context.Context, v interface{}) (string, error) {
 	res, err := graphql.UnmarshalString(v)
 	return res, graphql.ErrorOnPath(ctx, err)
@@ -2677,6 +3081,7 @@ func (ec *executionContext) marshalOString2string(ctx context.Context, sel ast.S
 	return graphql.MarshalString(v)
 }
 
+<<<<<<< HEAD
 func (ec *executionContext) unmarshalOString2ᚕstringᚄ(ctx context.Context, v interface{}) ([]string, error) {
 	if v == nil {
 		return nil, nil
@@ -2713,6 +3118,8 @@ func (ec *executionContext) marshalOString2ᚕstringᚄ(ctx context.Context, sel
 	return ret
 }
 
+=======
+>>>>>>> 7206e49 (Add Dish query/mutation/model)
 func (ec *executionContext) unmarshalOString2ᚖstring(ctx context.Context, v interface{}) (*string, error) {
 	if v == nil {
 		return nil, nil
