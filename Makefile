@@ -7,3 +7,6 @@ fresh-db: ## Sobe o banco localmente mas recriando tudo do zero
 
 gqlgen: ## Gera os arquivos para a API GraphQL
 	go generate ./config/http/config.go
+
+run: 
+	go generate ./cmd/http/http.go
