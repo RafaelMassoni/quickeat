@@ -42,3 +42,13 @@ jobs:
         run: |
           echo Add other actions to build,
           echo test, and deploy your project.
+
+  test:
+    runs-on: ubuntu-latest
+    needs:
+      - build
+
+    steps:
+      # run Go tests
+      - name: Run Go Test
+        run: go version
