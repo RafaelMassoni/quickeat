@@ -14,6 +14,7 @@ import (
 type CategoryService interface {
 	Get(ctx context.Context, id *int) ([]*entity.Category, error)
 	GetByDish(ctx context.Context, dishId int) (*entity.Category, error)
+	GetByRestaurant(ctx context.Context, restaurantId int) ([]*entity.Category, error)
 	Create(ctx context.Context, category *entity.Category) error
 	Update(ctx context.Context, category *entity.Category) error
 }
