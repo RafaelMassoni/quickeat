@@ -17,6 +17,8 @@ type CategoryService interface {
 	GetByRestaurant(ctx context.Context, restaurantId int) ([]*entity.Category, error)
 	Create(ctx context.Context, category *entity.Category) error
 	Update(ctx context.Context, category *entity.Category) error
+	DeleteCategoryById(ctx context.Context, id int) error
+	DeleteCategoryByName(ctx context.Context, name string) error
 }
 
 type categoryService struct {
@@ -98,6 +100,36 @@ func (c categoryService) Update(ctx context.Context, category *entity.Category) 
 	query := `UPDATE categorias SET nome = :nome WHERE id = :id`
 
 	_, err := c.db.NamedExecContext(ctx, query, category)
+	if err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func (c categoryService) DeleteCategoryById(ctx context.Context, id int) error {
+	result := make([]*entity.Category, 0)
+
+	query := `
+		DELETE FROM categorias WHERE id = ?
+	`
+
+	err := c.db.Select(&result, query, id)
+	if err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func (c categoryService) DeleteCategoryByName(ctx context.Context, name string) error {
+	result := make([]*entity.Category, 0)
+
+	query := `
+		DELETE FROM categorias WHERE nome = ?
+	`
+
+	err := c.db.Select(&result, query, name)
 	if err != nil {
 		return err
 	}

@@ -135,6 +135,18 @@ func TestDishService_DeleteDishByName(t *testing.T) {
 	srvc := NewDishService(sqlxDB)
 	query := regexp.QuoteMeta("DELETE FROM pratos WHERE nome = ?")
 
+	t.Run("success", func(t *testing.T) {
+		dishName := "test_failed"
+
+		mock.ExpectQuery(query).
+			WithArgs(dishName).
+			WillReturnRows(sqlmock.NewRows([]string{"id", "id_categoria", "nome", "preco", "tempo_de_preparo"}).
+				AddRow(1, 1, "dishName", 12, 20))
+
+		res := srvc.DeleteDishByName(ctx, dishName)
+		require.Nil(t, res)
+	})
+
 	t.Run("failed", func(t *testing.T) {
 		dishName := "test_sucess"
 		expectedErr := errors.New("Name not found")
@@ -145,18 +157,6 @@ func TestDishService_DeleteDishByName(t *testing.T) {
 
 		err := srvc.DeleteDishByName(ctx, dishName)
 		require.Error(t, err)
-	})
-
-	t.Run("success", func(t *testing.T) {
-		dishName := "test_failed"
-
-		mock.ExpectQuery(query).
-			WithArgs(dishName).
-			WillReturnRows(sqlmock.NewRows([]string{"id", "id_categoria", "nome", "preco", "tempo_de_preparo"}).
-				AddRow(1, 1, "dishName", 12, 20))
-
-		err := srvc.DeleteDishByName(ctx, dishName)
-		require.NoError(t, err)
 	})
 }
 
@@ -170,6 +170,18 @@ func TestDishService_DeleteDishById(t *testing.T) {
 	srvc := NewDishService(sqlxDB)
 	query := regexp.QuoteMeta("DELETE FROM pratos WHERE id = ?")
 
+	t.Run("success", func(t *testing.T) {
+		dishId := 1
+
+		mock.ExpectQuery(query).
+			WithArgs(dishId).
+			WillReturnRows(sqlmock.NewRows([]string{"id", "id_categoria", "nome", "preco", "tempo_de_preparo"}).
+				AddRow(1, 1, "dishName", 12, 20))
+
+		res := srvc.DeleteDishById(ctx, dishId)
+		require.Nil(t, res)
+	})
+
 	t.Run("failed", func(t *testing.T) {
 		dishId := 1
 		expectedErr := errors.New("Id not found")
@@ -180,18 +192,6 @@ func TestDishService_DeleteDishById(t *testing.T) {
 
 		err := srvc.DeleteDishById(ctx, dishId)
 		require.Error(t, err)
-	})
-
-	t.Run("success", func(t *testing.T) {
-		dishId := 1
-
-		mock.ExpectQuery(query).
-			WithArgs(dishId).
-			WillReturnRows(sqlmock.NewRows([]string{"id", "id_categoria", "nome", "preco", "tempo_de_preparo"}).
-				AddRow(1, 1, "dishName", 12, 20))
-
-		err := srvc.DeleteDishById(ctx, dishId)
-		require.NoError(t, err)
 	})
 }
 
@@ -203,32 +203,30 @@ func TestDishService_UpdateDishName(t *testing.T) {
 
 	sqlxDB := sqlx.NewDb(mockDB, "sqlmock")
 	srvc := NewDishService(sqlxDB)
-	query := regexp.QuoteMeta("UPDATE pratos SET nome = NewDishName WHERE DishId = ?;")
+	query := regexp.QuoteMeta("UPDATE pratos SET nome = ? WHERE id = ?")
+
+	dish := new(entity.Dish)
+	dish.Id = 1
+	dish.Name = "test"
+
+	t.Run("success", func(t *testing.T) {
+		mock.ExpectExec(query).
+			WithArgs(dish.Name, dish.Id).
+			WillReturnResult(sqlmock.NewResult(1, 1))
+
+		res := srvc.UpdateDishName(ctx, dish)
+		require.Nil(t, res)
+	})
 
 	t.Run("failed", func(t *testing.T) {
-		dishId := 1
-		dishName := "test"
 		expectedErr := errors.New("Id not found")
 
 		mock.ExpectQuery(query).
-			WithArgs(dishId).
+			WithArgs(dish.Name, dish.Id).
 			WillReturnError(expectedErr)
 
-		err := srvc.UpdateDishName(ctx, dishId, dishName)
+		err := srvc.UpdateDishName(ctx, dish)
 		require.Error(t, err)
-	})
-
-	t.Run("success", func(t *testing.T) {
-		dishId := 1
-		dishName := "test"
-
-		mock.ExpectQuery(query).
-			WithArgs(dishId).
-			WillReturnRows(sqlmock.NewRows([]string{"id", "id_categoria", "nome", "preco", "tempo_de_preparo"}).
-				AddRow(dishId, 1, dishName, 12, 20))
-
-		err := srvc.UpdateDishName(ctx, dishId, dishName)
-		require.NoError(t, err)
 	})
 }
 
@@ -240,32 +238,31 @@ func TestDishService_UpdateDishCategory(t *testing.T) {
 
 	sqlxDB := sqlx.NewDb(mockDB, "sqlmock")
 	srvc := NewDishService(sqlxDB)
-	query := regexp.QuoteMeta("UPDATE pratos SET id_categoria = NewDishCategory WHERE DishId = ?;")
+	query := regexp.QuoteMeta("UPDATE pratos SET id_categoria = ? WHERE id = ?")
 
-	t.Run("failed", func(t *testing.T) {
-		dishId := 1
-		dishCategory := "test"
-		expectedErr := errors.New("Id not found")
-
-		mock.ExpectQuery(query).
-			WithArgs(dishId).
-			WillReturnError(expectedErr)
-
-		err := srvc.UpdateDishCategory(ctx, dishId, dishCategory)
-		require.Error(t, err)
-	})
+	dish := new(entity.Dish)
+	dish.Id = 10
+	helper := int(50)
+	dish.CategoryID = &helper
 
 	t.Run("success", func(t *testing.T) {
-		dishId := 1
-		dishCategory := "test"
+		mock.ExpectExec(query).
+			WithArgs(dish.CategoryID, dish.Id).
+			WillReturnResult(sqlmock.NewResult(1, 1))
 
-		mock.ExpectQuery(query).
-			WithArgs(dishId).
-			WillReturnRows(sqlmock.NewRows([]string{"id", "id_categoria", "nome", "preco", "tempo_de_preparo"}).
-				AddRow(dishId, 1, dishCategory, 12, 20))
+		res := srvc.UpdateDishCategory(ctx, dish)
+		require.Nil(t, res)
+	})
 
-		err := srvc.UpdateDishCategory(ctx, dishId, dishCategory)
-		require.NoError(t, err)
+	t.Run("failed", func(t *testing.T) {
+		expectedErr := errors.New("Id not found")
+
+		mock.ExpectExec(query).
+			WithArgs(dish.Name, dish.Id).
+			WillReturnError(expectedErr)
+
+		err := srvc.UpdateDishCategory(ctx, dish)
+		require.Error(t, err)
 	})
 }
 
@@ -277,32 +274,31 @@ func TestDishService_UpdateDishPrice(t *testing.T) {
 
 	sqlxDB := sqlx.NewDb(mockDB, "sqlmock")
 	srvc := NewDishService(sqlxDB)
-	query := regexp.QuoteMeta("UPDATE pratos SET preco = NewDishPrice WHERE DishId = ?;")
+	query := regexp.QuoteMeta("UPDATE pratos SET preco = ? WHERE id = ?")
 
-	t.Run("failed", func(t *testing.T) {
-		dishId := 1
-		dishPrice := 10
-		expectedErr := errors.New("Id not found")
-
-		mock.ExpectQuery(query).
-			WithArgs(dishId).
-			WillReturnError(expectedErr)
-
-		err := srvc.UpdateDishPrice(ctx, dishId, dishPrice)
-		require.Error(t, err)
-	})
+	dish := new(entity.Dish)
+	dish.Id = 5
+	dish.Price = 35
 
 	t.Run("success", func(t *testing.T) {
-		dishId := 1
-		dishPrice := 2
 
-		mock.ExpectQuery(query).
-			WithArgs(dishId).
-			WillReturnRows(sqlmock.NewRows([]string{"id", "id_categoria", "nome", "preco", "tempo_de_preparo"}).
-				AddRow(dishId, 1, dishPrice, 12, 20))
+		mock.ExpectExec(query).
+			WithArgs(dish.Price, dish.Id).
+			WillReturnResult(sqlmock.NewResult(1, 1))
 
-		err := srvc.UpdateDishPrice(ctx, dishId, dishPrice)
-		require.NoError(t, err)
+		res := srvc.UpdateDishPrice(ctx, dish)
+		require.Nil(t, res)
+	})
+
+	t.Run("failed", func(t *testing.T) {
+		expectedErr := errors.New("Id not found")
+
+		mock.ExpectExec(query).
+			WithArgs(dish.Price, dish.Id).
+			WillReturnError(expectedErr)
+
+		err := srvc.UpdateDishPrice(ctx, dish)
+		require.Error(t, err)
 	})
 }
 
@@ -314,32 +310,30 @@ func TestDishService_UpdateDishPrepTime(t *testing.T) {
 
 	sqlxDB := sqlx.NewDb(mockDB, "sqlmock")
 	srvc := NewDishService(sqlxDB)
-	query := regexp.QuoteMeta("UPDATE pratos SET tempo_de_preparo = NewDishPrepTime WHERE DishId = ?;")
+	query := regexp.QuoteMeta("UPDATE pratos SET tempo_de_preparo = ? WHERE id = ?")
 
-	t.Run("failed", func(t *testing.T) {
-		dishId := 1
-		dishPrepTime := 2
-		expectedErr := errors.New("Id not found")
-
-		mock.ExpectQuery(query).
-			WithArgs(dishId).
-			WillReturnError(expectedErr)
-
-		err := srvc.UpdateDishPrepTime(ctx, dishId, dishPrepTime)
-		require.Error(t, err)
-	})
+	dish := new(entity.Dish)
+	dish.Id = 1
+	dish.CookTime = 60
 
 	t.Run("success", func(t *testing.T) {
-		dishId := 1
-		dishPrepTime := 2
+		mock.ExpectExec(query).
+			WithArgs(dish.CookTime, dish.Id).
+			WillReturnResult(sqlmock.NewResult(1, 1))
 
-		mock.ExpectQuery(query).
-			WithArgs(dishId).
-			WillReturnRows(sqlmock.NewRows([]string{"id", "id_categoria", "nome", "preco", "tempo_de_preparo"}).
-				AddRow(dishId, 1, dishPrepTime, 12, 20))
+		res := srvc.UpdateDishPrepTime(ctx, dish)
+		require.NoError(t, res)
+	})
 
-		err := srvc.UpdateDishPrepTime(ctx, dishId, dishPrepTime)
-		require.NoError(t, err)
+	t.Run("failed", func(t *testing.T) {
+		expectedErr := errors.New("Id not found")
+
+		mock.ExpectExec(query).
+			WithArgs(dish.CookTime, dish.Id).
+			WillReturnError(expectedErr)
+
+		err := srvc.UpdateDishPrepTime(ctx, dish)
+		require.Error(t, err)
 	})
 }
 

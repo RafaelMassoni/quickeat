@@ -123,57 +123,57 @@ func (mr *MockDishServiceMockRecorder) GetByCategory(ctx, categoryID interface{}
 }
 
 // UpdateDishCategory mocks base method.
-func (m *MockDishService) UpdateDishCategory(ctx context.Context, DishId int, NewDishCategory string) error {
+func (m *MockDishService) UpdateDishCategory(ctx context.Context, dish *entity.Dish) error {
 	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "UpdateDishCategory", ctx, DishId, NewDishCategory)
+	ret := m.ctrl.Call(m, "UpdateDishCategory", ctx, dish)
 	ret0, _ := ret[0].(error)
 	return ret0
 }
 
 // UpdateDishCategory indicates an expected call of UpdateDishCategory.
-func (mr *MockDishServiceMockRecorder) UpdateDishCategory(ctx, DishId, NewDishCategory interface{}) *gomock.Call {
+func (mr *MockDishServiceMockRecorder) UpdateDishCategory(ctx, dish interface{}) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "UpdateDishCategory", reflect.TypeOf((*MockDishService)(nil).UpdateDishCategory), ctx, DishId, NewDishCategory)
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "UpdateDishCategory", reflect.TypeOf((*MockDishService)(nil).UpdateDishCategory), ctx, dish)
 }
 
 // UpdateDishName mocks base method.
-func (m *MockDishService) UpdateDishName(ctx context.Context, DishId int, NewDishName string) error {
+func (m *MockDishService) UpdateDishName(ctx context.Context, dish *entity.Dish) error {
 	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "UpdateDishName", ctx, DishId, NewDishName)
+	ret := m.ctrl.Call(m, "UpdateDishName", ctx, dish)
 	ret0, _ := ret[0].(error)
 	return ret0
 }
 
 // UpdateDishName indicates an expected call of UpdateDishName.
-func (mr *MockDishServiceMockRecorder) UpdateDishName(ctx, DishId, NewDishName interface{}) *gomock.Call {
+func (mr *MockDishServiceMockRecorder) UpdateDishName(ctx, dish interface{}) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "UpdateDishName", reflect.TypeOf((*MockDishService)(nil).UpdateDishName), ctx, DishId, NewDishName)
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "UpdateDishName", reflect.TypeOf((*MockDishService)(nil).UpdateDishName), ctx, dish)
 }
 
 // UpdateDishPrepTime mocks base method.
-func (m *MockDishService) UpdateDishPrepTime(ctx context.Context, DishId, NewDishPrepTime int) error {
+func (m *MockDishService) UpdateDishPrepTime(ctx context.Context, dish *entity.Dish) error {
 	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "UpdateDishPrepTime", ctx, DishId, NewDishPrepTime)
+	ret := m.ctrl.Call(m, "UpdateDishPrepTime", ctx, dish)
 	ret0, _ := ret[0].(error)
 	return ret0
 }
 
 // UpdateDishPrepTime indicates an expected call of UpdateDishPrepTime.
-func (mr *MockDishServiceMockRecorder) UpdateDishPrepTime(ctx, DishId, NewDishPrepTime interface{}) *gomock.Call {
+func (mr *MockDishServiceMockRecorder) UpdateDishPrepTime(ctx, dish interface{}) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "UpdateDishPrepTime", reflect.TypeOf((*MockDishService)(nil).UpdateDishPrepTime), ctx, DishId, NewDishPrepTime)
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "UpdateDishPrepTime", reflect.TypeOf((*MockDishService)(nil).UpdateDishPrepTime), ctx, dish)
 }
 
 // UpdateDishPrice mocks base method.
-func (m *MockDishService) UpdateDishPrice(ctx context.Context, DishId, NewDishPrice int) error {
+func (m *MockDishService) UpdateDishPrice(ctx context.Context, dish *entity.Dish) error {
 	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "UpdateDishPrice", ctx, DishId, NewDishPrice)
+	ret := m.ctrl.Call(m, "UpdateDishPrice", ctx, dish)
 	ret0, _ := ret[0].(error)
 	return ret0
 }
 
 // UpdateDishPrice indicates an expected call of UpdateDishPrice.
-func (mr *MockDishServiceMockRecorder) UpdateDishPrice(ctx, DishId, NewDishPrice interface{}) *gomock.Call {
+func (mr *MockDishServiceMockRecorder) UpdateDishPrice(ctx, dish interface{}) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "UpdateDishPrice", reflect.TypeOf((*MockDishService)(nil).UpdateDishPrice), ctx, DishId, NewDishPrice)
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "UpdateDishPrice", reflect.TypeOf((*MockDishService)(nil).UpdateDishPrice), ctx, dish)
 }
