@@ -3,6 +3,7 @@ package services
 import (
 	"context"
 	"errors"
+	"quickeat/pkg/entity"
 	"regexp"
 	"testing"
 
@@ -342,43 +343,40 @@ func TestDishService_UpdateDishPrepTime(t *testing.T) {
 	})
 }
 
-// func TestDishService_CreateDish(t *testing.T) {
-// 	ctx := context.Background()
-// 	mockDB, mock, err := sqlmock.New()
-// 	require.NoError(t, err)
-// 	defer mockDB.Close()
+func TestDishService_CreateDish(t *testing.T) {
+	ctx := context.Background()
+	mockDB, mock, err := sqlmock.New()
+	require.NoError(t, err)
+	defer mockDB.Close()
 
-// 	sqlxDB := sqlx.NewDb(mockDB, "sqlmock")
-// 	srvc := NewDishService(sqlxDB)
-// 	query := regexp.QuoteMeta("INSERT INTO pratos (id, id_categoria, nome, preco, tempo_de_preparo) VALUES (?, ?, ?, ?, ?)")
+	sqlxDB := sqlx.NewDb(mockDB, "sqlmock")
+	srvc := NewDishService(sqlxDB)
+	query := regexp.QuoteMeta("INSERT INTO pratos (id, id_categoria, nome, preco, tempo_de_preparo) VALUES (?, ?, ?, ?, ?)")
 
-// 	mockDish := new(entity.Dish)
-// 	mockDish.Id = 1
-// 	mockDish.CookTime = 1
-// 	mockDish.Name = "banana"
-// 	mockDish.Price = 1
-// 	helper := int(1)
-// 	mockDish.CategoryID = &helper
+	mockDish := new(entity.Dish)
+	mockDish.Id = 1
+	mockDish.CookTime = 1
+	mockDish.Name = "banana"
+	mockDish.Price = 1
+	helper := int(1)
+	mockDish.CategoryID = &helper
 
-// 	t.Run("failed", func(t *testing.T) {
-// 		dishId := 1
-// 		expectedErr := errors.New("Id not found")
+	t.Run("success", func(t *testing.T) {
+		mock.ExpectExec(query).
+			WithArgs(mockDish.Id, mockDish.CategoryID, mockDish.Name, mockDish.Price, mockDish.CookTime).
+			WillReturnResult(sqlmock.NewResult(1, 1))
 
-// 		mock.ExpectQuery(query).
-// 			WithArgs(dishId).
-// 			WillReturnError(expectedErr)
+		res := srvc.CreateDish(ctx, mockDish)
+		require.Nil(t, res)
+	})
 
-// 		err := srvc.CreateDish(ctx, mockDish)
-// 		require.Error(t, err)
-// 	})
+	t.Run("failed", func(t *testing.T) {
+		expectedErr := errors.New("db failed")
 
-// 	t.Run("success", func(t *testing.T) {
+		mock.ExpectQuery(query).
+			WillReturnError(expectedErr)
 
-// 		mock.ExpectExec(query).
-// 			WithArgs(mockDish.Id, mockDish.Name).
-// 			WillReturnResult(sqlmock.NewResult(1, 1))
-
-// 		err := srvc.CreateDish(ctx, mockDish)
-// 		require.Nil(t, err)
-// 	})
-// }
+		err := srvc.CreateDish(ctx, mockDish)
+		require.Error(t, err)
+	})
+}
