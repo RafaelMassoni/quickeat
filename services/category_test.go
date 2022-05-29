@@ -227,3 +227,73 @@ func TestCategoryService_Update(t *testing.T) {
 		require.Error(t, res)
 	})
 }
+
+func TestCategoryService_DeleteCategoryByName(t *testing.T) {
+	ctx := context.Background()
+	mockDB, mock, err := sqlmock.New()
+	require.NoError(t, err)
+	defer mockDB.Close()
+
+	sqlxDB := sqlx.NewDb(mockDB, "sqlmock")
+	srvc := NewCategoryService(sqlxDB)
+	query := regexp.QuoteMeta("DELETE FROM categorias WHERE nome = ?")
+
+	t.Run("success", func(t *testing.T) {
+		categoryName := "massas"
+
+		mock.ExpectQuery(query).
+			WithArgs(categoryName).
+			WillReturnRows(sqlmock.NewRows([]string{"id", "nome"}).
+				AddRow(1, categoryName))
+
+		res := srvc.DeleteCategoryByName(ctx, categoryName)
+		require.Nil(t, res)
+	})
+
+	t.Run("failed", func(t *testing.T) {
+		categoryName := "massas"
+		expectedErr := errors.New("db failed")
+
+		mock.ExpectQuery(query).
+			WithArgs(categoryName).
+			WillReturnError(expectedErr)
+
+		err := srvc.DeleteCategoryByName(ctx, categoryName)
+		require.Error(t, err)
+	})
+}
+
+func TestCategoryService_DeleteCategoryById(t *testing.T) {
+	ctx := context.Background()
+	mockDB, mock, err := sqlmock.New()
+	require.NoError(t, err)
+	defer mockDB.Close()
+
+	sqlxDB := sqlx.NewDb(mockDB, "sqlmock")
+	srvc := NewCategoryService(sqlxDB)
+	query := regexp.QuoteMeta("DELETE FROM categorias WHERE id = ?")
+
+	t.Run("success", func(t *testing.T) {
+		categoryId := 1
+
+		mock.ExpectQuery(query).
+			WithArgs(categoryId).
+			WillReturnRows(sqlmock.NewRows([]string{"id", "nome"}).
+				AddRow(categoryId, "massas"))
+
+		res := srvc.DeleteCategoryById(ctx, categoryId)
+		require.Nil(t, res)
+	})
+
+	t.Run("failed", func(t *testing.T) {
+		categoryId := 1
+		expectedErr := errors.New("db failed")
+
+		mock.ExpectQuery(query).
+			WithArgs(categoryId).
+			WillReturnError(expectedErr)
+
+		err := srvc.DeleteCategoryById(ctx, categoryId)
+		require.Error(t, err)
+	})
+}
