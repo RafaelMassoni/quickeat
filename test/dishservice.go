@@ -35,6 +35,48 @@ func (m *MockDishService) EXPECT() *MockDishServiceMockRecorder {
 	return m.recorder
 }
 
+// CreateDish mocks base method.
+func (m *MockDishService) CreateDish(ctx context.Context, DishId int, NewDishCategory string) error {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "CreateDish", ctx, DishId, NewDishCategory)
+	ret0, _ := ret[0].(error)
+	return ret0
+}
+
+// CreateDish indicates an expected call of CreateDish.
+func (mr *MockDishServiceMockRecorder) CreateDish(ctx, DishId, NewDishCategory interface{}) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "CreateDish", reflect.TypeOf((*MockDishService)(nil).CreateDish), ctx, DishId, NewDishCategory)
+}
+
+// DeleteDishById mocks base method.
+func (m *MockDishService) DeleteDishById(ctx context.Context, DishId int) error {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "DeleteDishById", ctx, DishId)
+	ret0, _ := ret[0].(error)
+	return ret0
+}
+
+// DeleteDishById indicates an expected call of DeleteDishById.
+func (mr *MockDishServiceMockRecorder) DeleteDishById(ctx, DishId interface{}) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "DeleteDishById", reflect.TypeOf((*MockDishService)(nil).DeleteDishById), ctx, DishId)
+}
+
+// DeleteDishByName mocks base method.
+func (m *MockDishService) DeleteDishByName(ctx context.Context, DishName string) error {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "DeleteDishByName", ctx, DishName)
+	ret0, _ := ret[0].(error)
+	return ret0
+}
+
+// DeleteDishByName indicates an expected call of DeleteDishByName.
+func (mr *MockDishServiceMockRecorder) DeleteDishByName(ctx, DishName interface{}) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "DeleteDishByName", reflect.TypeOf((*MockDishService)(nil).DeleteDishByName), ctx, DishName)
+}
+
 // Get mocks base method.
 func (m *MockDishService) Get(ctx context.Context, id int) (*entity.Dish, error) {
 	m.ctrl.T.Helper()
@@ -78,4 +120,60 @@ func (m *MockDishService) GetByCategory(ctx context.Context, categoryID int) ([]
 func (mr *MockDishServiceMockRecorder) GetByCategory(ctx, categoryID interface{}) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetByCategory", reflect.TypeOf((*MockDishService)(nil).GetByCategory), ctx, categoryID)
+}
+
+// UpdateDishCategory mocks base method.
+func (m *MockDishService) UpdateDishCategory(ctx context.Context, DishId int, NewDishCategory string) error {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "UpdateDishCategory", ctx, DishId, NewDishCategory)
+	ret0, _ := ret[0].(error)
+	return ret0
+}
+
+// UpdateDishCategory indicates an expected call of UpdateDishCategory.
+func (mr *MockDishServiceMockRecorder) UpdateDishCategory(ctx, DishId, NewDishCategory interface{}) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "UpdateDishCategory", reflect.TypeOf((*MockDishService)(nil).UpdateDishCategory), ctx, DishId, NewDishCategory)
+}
+
+// UpdateDishName mocks base method.
+func (m *MockDishService) UpdateDishName(ctx context.Context, DishId int, NewDishName string) error {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "UpdateDishName", ctx, DishId, NewDishName)
+	ret0, _ := ret[0].(error)
+	return ret0
+}
+
+// UpdateDishName indicates an expected call of UpdateDishName.
+func (mr *MockDishServiceMockRecorder) UpdateDishName(ctx, DishId, NewDishName interface{}) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "UpdateDishName", reflect.TypeOf((*MockDishService)(nil).UpdateDishName), ctx, DishId, NewDishName)
+}
+
+// UpdateDishPrepTime mocks base method.
+func (m *MockDishService) UpdateDishPrepTime(ctx context.Context, DishId, NewDishPrepTime int) error {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "UpdateDishPrepTime", ctx, DishId, NewDishPrepTime)
+	ret0, _ := ret[0].(error)
+	return ret0
+}
+
+// UpdateDishPrepTime indicates an expected call of UpdateDishPrepTime.
+func (mr *MockDishServiceMockRecorder) UpdateDishPrepTime(ctx, DishId, NewDishPrepTime interface{}) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "UpdateDishPrepTime", reflect.TypeOf((*MockDishService)(nil).UpdateDishPrepTime), ctx, DishId, NewDishPrepTime)
+}
+
+// UpdateDishPrice mocks base method.
+func (m *MockDishService) UpdateDishPrice(ctx context.Context, DishId, NewDishPrice int) error {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "UpdateDishPrice", ctx, DishId, NewDishPrice)
+	ret0, _ := ret[0].(error)
+	return ret0
+}
+
+// UpdateDishPrice indicates an expected call of UpdateDishPrice.
+func (mr *MockDishServiceMockRecorder) UpdateDishPrice(ctx, DishId, NewDishPrice interface{}) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "UpdateDishPrice", reflect.TypeOf((*MockDishService)(nil).UpdateDishPrice), ctx, DishId, NewDishPrice)
 }
