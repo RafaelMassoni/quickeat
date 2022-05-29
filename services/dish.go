@@ -15,10 +15,10 @@ type DishService interface {
 	GetByCategory(ctx context.Context, categoryID int) ([]*entity.Dish, error)
 	DeleteDishByName(ctx context.Context, DishName string) error
 	DeleteDishById(ctx context.Context, DishId int) error
-	UpdateDishName(ctx context.Context, DishId int, NewDishName string) error
-	UpdateDishPrepTime(ctx context.Context, DishId int, NewDishPrepTime int) error
-	UpdateDishPrice(ctx context.Context, DishId int, NewDishPrice int) error
-	UpdateDishCategory(ctx context.Context, DishId int, NewDishCategory string) error
+	UpdateDishName(ctx context.Context, dish *entity.Dish) error
+	UpdateDishPrepTime(ctx context.Context, dish *entity.Dish) error
+	UpdateDishPrice(ctx context.Context, dish *entity.Dish) error
+	UpdateDishCategory(ctx context.Context, dish *entity.Dish) error
 	CreateDish(ctx context.Context, dish *entity.Dish) error
 }
 
@@ -105,16 +105,14 @@ func (d dishService) DeleteDishById(ctx context.Context, DishId int) error {
 	return nil
 }
 
-func (d dishService) UpdateDishName(ctx context.Context, DishId int, NewDishName string) error {
-	result := make([]*entity.Dish, 0)
-
+func (d dishService) UpdateDishName(ctx context.Context, dish *entity.Dish) error {
 	query := `
 		UPDATE pratos
-		SET nome = NewDishName
-		WHERE DishId = ?;
+		SET nome = :nome
+		WHERE id = :id
 	`
 
-	err := d.db.Select(&result, query, DishId)
+	_, err := d.db.NamedExecContext(ctx, query, dish)
 	if err != nil {
 		return err
 	}
@@ -122,16 +120,14 @@ func (d dishService) UpdateDishName(ctx context.Context, DishId int, NewDishName
 	return nil
 }
 
-func (d dishService) UpdateDishPrepTime(ctx context.Context, DishId int, NewDishPrepTime int) error {
-	result := make([]*entity.Dish, 0)
-
+func (d dishService) UpdateDishPrepTime(ctx context.Context, dish *entity.Dish) error {
 	query := `
 		UPDATE pratos
-		SET tempo_de_preparo = NewDishPrepTime
-		WHERE DishId = ?;
+		SET tempo_de_preparo = :tempo_de_preparo
+		WHERE id = :id
 	`
 
-	err := d.db.Select(&result, query, DishId)
+	_, err := d.db.NamedExecContext(ctx, query, dish)
 	if err != nil {
 		return err
 	}
@@ -139,31 +135,28 @@ func (d dishService) UpdateDishPrepTime(ctx context.Context, DishId int, NewDish
 	return nil
 }
 
-func (d dishService) UpdateDishPrice(ctx context.Context, DishId int, NewDishPrice int) error {
-	result := make([]*entity.Dish, 0)
-
+func (d dishService) UpdateDishPrice(ctx context.Context, dish *entity.Dish) error {
 	query := `
 		UPDATE pratos
-		SET preco = NewDishPrice
-		WHERE DishId = ?;	`
+		SET preco = :preco
+		WHERE id = :id
+		`
 
-	err := d.db.Select(&result, query, DishId)
+	_, err := d.db.NamedExecContext(ctx, query, dish)
 	if err != nil {
 		return err
 	}
 
 	return nil
 }
-func (d dishService) UpdateDishCategory(ctx context.Context, DishId int, NewDishCategory string) error {
-	result := make([]*entity.Dish, 0)
-
+func (d dishService) UpdateDishCategory(ctx context.Context, dish *entity.Dish) error {
 	query := `
 		UPDATE pratos
-		SET id_categoria = NewDishCategory
-		WHERE DishId = ?;
+		SET id_categoria = :id_categoria
+		WHERE id = :id
 	`
 
-	err := d.db.Select(&result, query, DishId)
+	_, err := d.db.NamedExecContext(ctx, query, dish)
 	if err != nil {
 		return err
 	}

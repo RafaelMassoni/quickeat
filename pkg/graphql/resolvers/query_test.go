@@ -4,11 +4,12 @@ import (
 	"context"
 	"testing"
 
-	"github.com/golang/mock/gomock"
-	"github.com/stretchr/testify/require"
 	"quickeat/pkg/entity"
 	"quickeat/services"
 	mock "quickeat/test"
+
+	"github.com/golang/mock/gomock"
+	"github.com/stretchr/testify/require"
 )
 
 func TestQueryResolver_Dish(t *testing.T) {

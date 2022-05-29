@@ -49,6 +49,34 @@ func (mr *MockCategoryServiceMockRecorder) Create(ctx, category interface{}) *go
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Create", reflect.TypeOf((*MockCategoryService)(nil).Create), ctx, category)
 }
 
+// DeleteCategoryById mocks base method.
+func (m *MockCategoryService) DeleteCategoryById(ctx context.Context, id int) error {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "DeleteCategoryById", ctx, id)
+	ret0, _ := ret[0].(error)
+	return ret0
+}
+
+// DeleteCategoryById indicates an expected call of DeleteCategoryById.
+func (mr *MockCategoryServiceMockRecorder) DeleteCategoryById(ctx, id interface{}) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "DeleteCategoryById", reflect.TypeOf((*MockCategoryService)(nil).DeleteCategoryById), ctx, id)
+}
+
+// DeleteCategoryByName mocks base method.
+func (m *MockCategoryService) DeleteCategoryByName(ctx context.Context, name string) error {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "DeleteCategoryByName", ctx, name)
+	ret0, _ := ret[0].(error)
+	return ret0
+}
+
+// DeleteCategoryByName indicates an expected call of DeleteCategoryByName.
+func (mr *MockCategoryServiceMockRecorder) DeleteCategoryByName(ctx, name interface{}) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "DeleteCategoryByName", reflect.TypeOf((*MockCategoryService)(nil).DeleteCategoryByName), ctx, name)
+}
+
 // Get mocks base method.
 func (m *MockCategoryService) Get(ctx context.Context, id *int) ([]*entity.Category, error) {
 	m.ctrl.T.Helper()
@@ -77,6 +105,21 @@ func (m *MockCategoryService) GetByDish(ctx context.Context, dishId int) (*entit
 func (mr *MockCategoryServiceMockRecorder) GetByDish(ctx, dishId interface{}) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetByDish", reflect.TypeOf((*MockCategoryService)(nil).GetByDish), ctx, dishId)
+}
+
+// GetByRestaurant mocks base method.
+func (m *MockCategoryService) GetByRestaurant(ctx context.Context, restaurantId int) ([]*entity.Category, error) {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "GetByRestaurant", ctx, restaurantId)
+	ret0, _ := ret[0].([]*entity.Category)
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
+}
+
+// GetByRestaurant indicates an expected call of GetByRestaurant.
+func (mr *MockCategoryServiceMockRecorder) GetByRestaurant(ctx, restaurantId interface{}) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetByRestaurant", reflect.TypeOf((*MockCategoryService)(nil).GetByRestaurant), ctx, restaurantId)
 }
 
 // Update mocks base method.
