@@ -11,6 +11,7 @@ type Dish {
 type Category {
 	id: Int!
 	name: String!
+	dishes: [Dish!]
 }
 
 input createDishInput {

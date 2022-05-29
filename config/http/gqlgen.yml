@@ -5,3 +5,14 @@ exec:
 
 model:
   filename: ./../../pkg/graphql/models/generated.go
+
+models:
+  Dish:
+    fields:
+      category:
+        resolver: true
+
+  Category:
+    fields:
+      dishes:
+        resolver: true
