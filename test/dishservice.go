@@ -36,17 +36,17 @@ func (m *MockDishService) EXPECT() *MockDishServiceMockRecorder {
 }
 
 // CreateDish mocks base method.
-func (m *MockDishService) CreateDish(ctx context.Context, DishId int, NewDishCategory string) error {
+func (m *MockDishService) CreateDish(ctx context.Context, dish *entity.Dish) error {
 	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "CreateDish", ctx, DishId, NewDishCategory)
+	ret := m.ctrl.Call(m, "CreateDish", ctx, dish)
 	ret0, _ := ret[0].(error)
 	return ret0
 }
 
 // CreateDish indicates an expected call of CreateDish.
-func (mr *MockDishServiceMockRecorder) CreateDish(ctx, DishId, NewDishCategory interface{}) *gomock.Call {
+func (mr *MockDishServiceMockRecorder) CreateDish(ctx, dish interface{}) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "CreateDish", reflect.TypeOf((*MockDishService)(nil).CreateDish), ctx, DishId, NewDishCategory)
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "CreateDish", reflect.TypeOf((*MockDishService)(nil).CreateDish), ctx, dish)
 }
 
 // DeleteDishById mocks base method.
