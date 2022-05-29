@@ -172,17 +172,18 @@ func (d dishService) UpdateDishCategory(ctx context.Context, DishId int, NewDish
 }
 
 func (d dishService) CreateDish(ctx context.Context, dish *entity.Dish) error {
-	result := make([]*entity.Dish, 0)
 
 	query := `
 		INSERT INTO pratos (id, id_categoria, nome, preco, tempo_de_preparo)
-		VALUES (:id, :category, :name, :price, :tempPrep)
+		VALUES (:id, :id_categoria, :nome, :preco, :tempo_de_preparo)
 	`
 
-	err := d.db.Select(&result, query, dish)
+	result, err := d.db.NamedExecContext(ctx, query, dish)
 	if err != nil {
 		return err
 	}
 
+	id, _ := result.LastInsertId()
+	dish.Id = int(id)
 	return nil
 }
