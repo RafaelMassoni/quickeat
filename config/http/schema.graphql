@@ -16,14 +16,14 @@ type Category {
 
 input createDishInput {
 	name: String!
-	category: Int
+	category: Int!
 	price: Float!
 	cookTime: Int!
 }
 
 type Query {
 	dish(id: Int): [Dish!]
-	category(id: Int!): Category!
+	category(id: Int): [Category!]
 }
 
 type Mutation {

@@ -3,9 +3,10 @@ package services
 import (
 	"context"
 	"errors"
-	"quickeat/pkg/entity"
 	"regexp"
 	"testing"
+
+	"quickeat/pkg/entity"
 
 	"github.com/DATA-DOG/go-sqlmock"
 	"github.com/jmoiron/sqlx"
@@ -345,10 +346,9 @@ func TestDishService_CreateDish(t *testing.T) {
 
 	sqlxDB := sqlx.NewDb(mockDB, "sqlmock")
 	srvc := NewDishService(sqlxDB)
-	query := regexp.QuoteMeta("INSERT INTO pratos (id, id_categoria, nome, preco, tempo_de_preparo) VALUES (?, ?, ?, ?, ?)")
+	query := regexp.QuoteMeta("INSERT INTO pratos (id_categoria, nome, preco, tempo_de_preparo) VALUES (?, ?, ?, ?)")
 
 	mockDish := new(entity.Dish)
-	mockDish.Id = 1
 	mockDish.CookTime = 1
 	mockDish.Name = "banana"
 	mockDish.Price = 1
@@ -357,7 +357,7 @@ func TestDishService_CreateDish(t *testing.T) {
 
 	t.Run("success", func(t *testing.T) {
 		mock.ExpectExec(query).
-			WithArgs(mockDish.Id, mockDish.CategoryID, mockDish.Name, mockDish.Price, mockDish.CookTime).
+			WithArgs(mockDish.CategoryID, mockDish.Name, mockDish.Price, mockDish.CookTime).
 			WillReturnResult(sqlmock.NewResult(1, 1))
 
 		res := srvc.CreateDish(ctx, mockDish)

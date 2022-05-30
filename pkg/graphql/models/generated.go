@@ -18,7 +18,7 @@ type Dish struct {
 
 type CreateDishInput struct {
 	Name     string  `json:"name"`
-	Category *int    `json:"category"`
+	Category int     `json:"category"`
 	Price    float64 `json:"price"`
 	CookTime int     `json:"cookTime"`
 }

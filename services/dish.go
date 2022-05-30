@@ -167,8 +167,8 @@ func (d dishService) UpdateDishCategory(ctx context.Context, dish *entity.Dish) 
 func (d dishService) CreateDish(ctx context.Context, dish *entity.Dish) error {
 
 	query := `
-		INSERT INTO pratos (id, id_categoria, nome, preco, tempo_de_preparo)
-		VALUES (:id, :id_categoria, :nome, :preco, :tempo_de_preparo)
+		INSERT INTO pratos (id_categoria, nome, preco, tempo_de_preparo)
+		VALUES (:id_categoria, :nome, :preco, :tempo_de_preparo)
 	`
 
 	result, err := d.db.NamedExecContext(ctx, query, dish)

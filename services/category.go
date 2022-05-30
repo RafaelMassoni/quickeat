@@ -14,7 +14,6 @@ import (
 type CategoryService interface {
 	Get(ctx context.Context, id *int) ([]*entity.Category, error)
 	GetByDish(ctx context.Context, dishId int) (*entity.Category, error)
-	GetByRestaurant(ctx context.Context, restaurantId int) ([]*entity.Category, error)
 	Create(ctx context.Context, category *entity.Category) error
 	Update(ctx context.Context, category *entity.Category) error
 	DeleteCategoryById(ctx context.Context, id int) error
@@ -54,24 +53,6 @@ func (c categoryService) GetByDish(ctx context.Context, dishId int) (*entity.Cat
 				WHERE p.id = ?`
 
 	err := c.db.GetContext(ctx, result, query, dishId)
-	if err != nil {
-		if err == sql.ErrNoRows {
-			return nil, nil
-		}
-		return nil, err
-	}
-	return result, err
-}
-
-func (c categoryService) GetByRestaurant(ctx context.Context, restaurantId int) ([]*entity.Category, error) {
-	result := make([]*entity.Category, 0)
-
-	query := fmt.Sprintf("SELECT c.id, c.nome FROM categorias as c "+
-		"INNER JOIN `restaurante-categoria` as rc "+
-		"on c.id = rc.id_categoria "+
-		"WHERE rc.id_restaurante = %d", restaurantId)
-
-	err := c.db.SelectContext(ctx, &result, query)
 	if err != nil {
 		if err == sql.ErrNoRows {
 			return nil, nil
