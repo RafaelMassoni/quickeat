@@ -19,7 +19,7 @@ func (a app) Query() gqlgen.QueryResolver {
 }
 
 func (a app) Mutation() gqlgen.MutationResolver {
-	return NewMutationResolver()
+	return NewMutationResolver(a.services)
 }
 
 func (a app) Dish() gqlgen.DishResolver {

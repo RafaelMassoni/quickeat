@@ -107,21 +107,6 @@ func (mr *MockCategoryServiceMockRecorder) GetByDish(ctx, dishId interface{}) *g
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetByDish", reflect.TypeOf((*MockCategoryService)(nil).GetByDish), ctx, dishId)
 }
 
-// GetByRestaurant mocks base method.
-func (m *MockCategoryService) GetByRestaurant(ctx context.Context, restaurantId int) ([]*entity.Category, error) {
-	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "GetByRestaurant", ctx, restaurantId)
-	ret0, _ := ret[0].([]*entity.Category)
-	ret1, _ := ret[1].(error)
-	return ret0, ret1
-}
-
-// GetByRestaurant indicates an expected call of GetByRestaurant.
-func (mr *MockCategoryServiceMockRecorder) GetByRestaurant(ctx, restaurantId interface{}) *gomock.Call {
-	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetByRestaurant", reflect.TypeOf((*MockCategoryService)(nil).GetByRestaurant), ctx, restaurantId)
-}
-
 // Update mocks base method.
 func (m *MockCategoryService) Update(ctx context.Context, category *entity.Category) error {
 	m.ctrl.T.Helper()

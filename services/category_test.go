@@ -5,9 +5,10 @@ import (
 	"database/sql"
 	"errors"
 	"fmt"
-	"quickeat/pkg/entity"
 	"regexp"
 	"testing"
+
+	"quickeat/pkg/entity"
 
 	"github.com/DATA-DOG/go-sqlmock"
 	"github.com/jmoiron/sqlx"
@@ -101,58 +102,6 @@ func TestCategoryService_GetByDish(t *testing.T) {
 			WillReturnError(expectedErr)
 
 		res, err := srvc.GetByDish(ctx, dishId)
-		require.Nil(t, err)
-		require.Nil(t, res)
-	})
-}
-
-func TestCategoryService_GetByRestaurant(t *testing.T) {
-	ctx := context.Background()
-	mockDB, mock, err := sqlmock.New()
-	require.NoError(t, err)
-	defer mockDB.Close()
-
-	sqlxDB := sqlx.NewDb(mockDB, "sqlmock")
-	srvc := NewCategoryService(sqlxDB)
-
-	restaurantId := 5
-
-	query := regexp.QuoteMeta(
-		fmt.Sprintf("SELECT c.id, c.nome FROM categorias as c "+
-			"INNER JOIN `restaurante-categoria` as rc "+
-			"on c.id = rc.id_categoria "+
-			"WHERE rc.id_restaurante = %d", restaurantId))
-
-	t.Run("success", func(t *testing.T) {
-		categoryId := 10
-		mock.ExpectQuery(query).
-			WillReturnRows(sqlmock.NewRows([]string{"id", "nome"}).
-				AddRow(categoryId, "massas"))
-
-		res, err := srvc.GetByRestaurant(ctx, restaurantId)
-		require.NoError(t, err)
-		require.Equal(t, categoryId, res[0].Id)
-		require.Equal(t, "massas", res[0].Name)
-	})
-
-	t.Run("failed", func(t *testing.T) {
-		expectedErr := errors.New("db failed")
-
-		mock.ExpectQuery(query).
-			WillReturnError(expectedErr)
-
-		res, err := srvc.GetByRestaurant(ctx, restaurantId)
-		require.Error(t, err)
-		require.Nil(t, res)
-	})
-
-	t.Run("failed: no rows", func(t *testing.T) {
-		expectedErr := sql.ErrNoRows
-
-		mock.ExpectQuery(query).
-			WillReturnError(expectedErr)
-
-		res, err := srvc.GetByRestaurant(ctx, restaurantId)
 		require.Nil(t, err)
 		require.Nil(t, res)
 	})
