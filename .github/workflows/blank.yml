@@ -50,4 +50,13 @@ jobs:
 
         # run Go tests
       - name: Run Go Test
-        run: go test -gcflags=all=-l -race ./...
+        # run: go test -gcflags=all=-l -race ./...
+        run: go test -gcflags=all=-l -race -coverprofile=coverage.txt ./...
+          
+      - name: Coverage
+        run : go tool cover -func coverage.txt
+      
+      - name: Codecov
+        uses: codecov/codecov-action@v3.1.0
+
+
