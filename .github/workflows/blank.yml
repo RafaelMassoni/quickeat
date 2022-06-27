@@ -54,7 +54,7 @@ jobs:
         run: go test -gcflags=all=-l -race -coverprofile=cov.txt ./...
           
       - name: Coverage
-        run : go tool cover -func c.out
+        run : go tool cover -func cov.txt
       
       - name: Codecov
         uses: codecov/codecov-action@v3.1.0
